@@ -1,5 +1,5 @@
 import asyncio
-from aiobmlcore.http import HTTPSession
+from .aiobmlcore.http import HTTPSession
 
 
 class asyncBML():
