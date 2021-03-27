@@ -27,11 +27,11 @@ import asyncio
 from aiobml import asyncBML
 
 loop = asyncio.get_event_loop()
-myaccount = asyncBML(username="your user name",password="your password")
+bank = asyncBML(username="your_user_name",password="your_password")
 
 async def main():
     while True:
-        data = await myaccount.get_history()
+        data = await bank.get_history()
         for accounts in data:
             for transaction in accounts:
                 print(transaction)
@@ -46,5 +46,5 @@ if __name__ == '__main__':
     except (KeyboardInterrupt, SystemExit):
         pass
     finally:
-        loop.run_until_complete(myaccount.close())
+        loop.run_until_complete(bank.close())
 ```
