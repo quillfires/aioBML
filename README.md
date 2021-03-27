@@ -31,9 +31,9 @@ bank = asyncBML(username="your_user_name",password="your_password")
 
 async def main():
     while True:
-        data = await bank.get_history()
-        for accounts in data:
-            for transaction in accounts:
+        mybank = await bank.get_history()
+        for accounts in mybank:
+            for transaction in mybank[accounts]:
                 print(transaction)
                 #check if it is in your db
                 # if not, save to db and alert about the transaction
