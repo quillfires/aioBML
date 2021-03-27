@@ -13,7 +13,7 @@ You must have python 3 installed
 
 ### From Source
 
-```$ git clone https://github.com/quillfires/aiobml.git```
+```$ git clone https://github.com/quillfires/aioBML.git```
 
 ```$ cd aiobml```
 
