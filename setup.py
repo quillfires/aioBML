@@ -23,7 +23,7 @@ setup(
     name='aiobml',
     version=VERSION,
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
-    url='https://github.com/aiogram/aiobml',
+    url='https://github.com/quillfires/aioBML',
     license='MIT',
     requires_python='>=3.7',
     author='Fayaz (Quill)',
