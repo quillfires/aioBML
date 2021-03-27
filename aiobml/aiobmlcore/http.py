@@ -63,12 +63,12 @@ class HTTPSession:
                             transactions = data["payload"]["history"]
                             return transactions
                     else:
-                        raise HTTPException(f'Failed to fulfil request ({resp.status}).', resp.reason, resp.status)
+                        raise HTTPException('Failed to fulfil request.')
                 if data["message"] == "Success":
                     transactions = data["payload"]["history"]
                     return transactions
             else:
-                raise HTTPException(f'Failed to fulfil request ({resp.status}).', resp.reason, resp.status)
+                raise HTTPException('Failed to fulfil request.')
 
     async def close(self):
         await self._session.close()
