@@ -1,4 +1,4 @@
-This is an asynchronous Python Bank of Maldives API wrapper. This repo is an async version built using [bml_notifier](https://github.com/Dharisd/bml_notifier) as a reference. 
+This is an asynchronous Python Bank of Maldives API wrapper. This repo is an async version built using [bml_notifier](https://github.com/Dharisd/bml_notifier) and [bml-transactions](https://github.com/baraveli/bml-transactions) as a reference. 
 
 # How it works
 
