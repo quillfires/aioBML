@@ -24,7 +24,7 @@ You must have python 3 installed
 ```python
 import asyncio
 
-from client import asyncBML
+from aiobml import asyncBML
 
 loop = asyncio.get_event_loop()
 myaccount = asyncBML(username="your user name",password="your password")
