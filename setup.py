@@ -16,7 +16,7 @@ MINIMAL_PY_VERSION = (3, 7)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aiobml works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-VERSION = '0.0.5'
+VERSION = '0.0.6'
 LONG_DESCRIPTION = "Its a simple asynchronous Python API wrapper that returns the transaction history of all your accounts from the Bank of Maldives web API. If you want to check for new transactions, save the transactions to a db, check and add any transactions that's not currently saved to the db."
 
 setup(
