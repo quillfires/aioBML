@@ -1,3 +1,5 @@
+[![HitCount](http://hits.dwyl.com/quillfires/aioBML.svg)](http://hits.dwyl.com/quillfires/aioBML)  [![Python Version](https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue.svg)](https://www.python.org)
+
 This is an asynchronous Python wrapper around the Bank of Maldives API. This repo is an async version built using [bml_notifier](https://github.com/Dharisd/bml_notifier) and [bml-transactions](https://github.com/baraveli/bml-transactions) as a reference. 
 
 # How it works
