@@ -27,6 +27,7 @@ class HTTPSession:
             raise HTTPException("Unable to login, username and/or password not given")
 
         url = self.base_url + "/login"
+        print("Login in using username and password...")
         await self._session.post(url, data=self.login_params)
         async with self._session.get(f"{self.base_url}profile") as profile:
             if profile.status == 200:
@@ -38,18 +39,21 @@ class HTTPSession:
                             self.acc_populate = False
                             return True
                         else:
+                            print("Can't retrieve the accounts")
                             return False
                 else:
                     return True
+            print("Can't login...")
             return False
 
     async def request(self, method, url):
-        data = {}
         url = f'{self.BASE}{url}'
         body = await self._request(method, url)
         if body:
             data = body
-        return data
+            return data
+        else:
+            return None
 
     async def _request(self, method, url):
         async with self._session.request(method, url) as resp:
@@ -63,12 +67,14 @@ class HTTPSession:
                             transactions = data["payload"]["history"]
                             return transactions
                     else:
-                        raise HTTPException('Failed to fulfil request.')
+                        print("Failed to fulfil request.")
+                        return None
                 if data["message"] == "Success":
                     transactions = data["payload"]["history"]
                     return transactions
             else:
-                raise HTTPException('Failed to fulfil request.')
+                print("Failed to fulfil request.")
+                return None
 
     async def close(self):
         await self._session.close()
@@ -80,7 +86,7 @@ class HTTPSession:
         for x in self.accounts:
             for v in x:
                 transactions = await self.request('GET', f'account/{v}/history/today')
-                if len(transactions) > 0:
+                if transactions and (len(transactions) > 0):
                     history[x[v]] = [
                         {"date": tr["narrative2"], "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], "balance": tr["balance"], "description": tr["description"]} for tr in transactions]
         return history
