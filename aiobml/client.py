@@ -19,6 +19,7 @@ class asyncBML():
         ---------
         dict: transactions
             Dictionary object containing transactions relating to each account.
+            {account1:{[transaction1,transaction2]},account2:{[transaction1,transaction2]},}
 
         Raises
         --------
