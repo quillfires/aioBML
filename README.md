@@ -34,6 +34,21 @@ bank = asyncBML(username="your_user_name",password="your_password")
 async def main():
     while True:
         history = await bank.get_history()
+        # will return a dict object for
+        # {account1:{[{transaction1},{trabsaction2}]},}
+        # example:
+        # {'ACCOUNT NUMBER': 
+        #     [
+        #         {
+        #             'date': date, 
+        #             'sender': sender, 
+        #             'amount': amount, 
+        #             'minus': True/False, 
+        #             'balance': balance, 
+        #             'description': 'Transfer Credit or Transfer Debit'
+        #         }, 
+        #     ],
+        # } 
         if history:
             for accounts in history:
                 for transaction in history[accounts]:
