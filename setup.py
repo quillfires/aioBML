@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
     url='https://github.com/quillfires/aioBML',
     license='MIT',
-    requires_python='>=3.7',
+    requires_python='>=3.8',
     author='Fayaz (Quill)',
     author_email='fayaz.quill@gmail.com',
     maintainer=', '.join((
