@@ -35,20 +35,20 @@ async def main():
     while True:
         history = await bank.get_history()
         # will return a dict object for
-        # {account1:{[{transaction1},{trabsaction2}]},}
-        # example:
+        # {account1:[{transaction1},{trabsaction2}],}
+        # example of one account with one transaction:
         # {'ACCOUNT NUMBER': 
         #     [
         #         {
-        #             'date': date, 
-        #             'sender': sender, 
-        #             'amount': amount, 
+        #             'date': 'date', 
+        #             'sender': 'sender name', 
+        #             'amount': 'amount', 
         #             'minus': True/False, 
-        #             'balance': balance, 
+        #             'balance': 'balance', 
         #             'description': 'Transfer Credit or Transfer Debit'
         #         }, 
         #     ],
-        # } 
+        # }
         if history:
             for accounts in history:
                 for transaction in history[accounts]:
