@@ -17,7 +17,7 @@ if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aiobml works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
 VERSION = '0.1.0'
-LONG_DESCRIPTION = "Its a simple asynchronous Python API wrapper that returns the transaction history of all your accounts from the Bank of Maldives web API. If you want to check for new transactions, save the transactions to a db, check and add any transactions that's not currently saved to the db."
+LONG_DESCRIPTION = "Its a simple asynchronous Python wrapper around the BML API that returns the transaction history of all your Bank of Maldives accounts from. If you want to check for new transactions; store the transactions in a db, check and add any transactions that's not currently saved to the db."
 
 setup(
     name='aiobml',
@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
     url='https://github.com/quillfires/aioBML',
     license='MIT',
-    requires_python='>=3.8',
+    requires_python='>=3.7',
     author='Fayaz (Quill)',
     author_email='fayaz.quill@gmail.com',
     maintainer=', '.join((
@@ -41,7 +41,9 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
     install_requires=[
