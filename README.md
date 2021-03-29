@@ -34,9 +34,10 @@ bank = asyncBML(username="your_user_name",password="your_password")
 async def main():
     while True:
         history = await bank.get_history()
-        # will return a dict object for
+        # will return a dict object for any of your account
+        # that has a transaction in 24 to 48 hours. 
         # {account1:[{transaction1},{trabsaction2}],}
-        # example of one account with one transaction:
+        # detailed example of one account with one transaction:
         # {'ACCOUNT NUMBER': 
         #     [
         #         {
