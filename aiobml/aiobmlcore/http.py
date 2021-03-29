@@ -33,9 +33,8 @@ class HTTPSession:
         if not self.login_params:
             raise HTTPException("Unable to login, username and/or password not given")
 
-        url = self.base_url + "/login"
         print("Login in using username and password...")
-        await self._session.post(url, data=self.login_params)
+        await self._session.post(f"{self.base_url}login", data=self.login_params)
         async with self._session.get(f"{self.base_url}profile") as profile:
             if profile.status == 200:
                 if self.acc_populate:
@@ -56,11 +55,7 @@ class HTTPSession:
     async def request(self, method, url):
         url = f'{self.BASE}{url}'
         body = await self._request(method, url)
-        if body:
-            data = body
-            return data
-        else:
-            return None
+        return body
 
     async def _request(self, method, url):
         async with self._session.request(method, url) as resp:
