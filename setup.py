@@ -32,7 +32,7 @@ setup(
         'quill <fayaz.quill@gmail.com>',
     )),
     maintainer_email='fayaz.quill@gmail.com',
-    description='Asynchronous Python BML API wrapper',
+    description='Asynchronous Python wrapper around BML API',
     long_description=LONG_DESCRIPTION,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
