@@ -20,7 +20,14 @@ class HTTPSession:
         if not self.login_params:
             raise Unauthorized('A username and password is needed to use this API.')
         jar = aiohttp.CookieJar(unsafe=True)
-        self._session = aiohttp.ClientSession(loop=loop, cookie_jar=jar)
+        header = {
+            'Accept': '/',
+            'Connection': 'keep-alive',
+            'User-Agent': (
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) '
+                'AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.168 Safari/535.19')
+        }
+        self._session = aiohttp.ClientSession(loop=loop, cookie_jar=jar, headers=header)
 
     async def login(self):
         if not self.login_params:
@@ -60,20 +67,25 @@ class HTTPSession:
             data = await resp.json(encoding="utf-8")
             if data:
                 if (data["message"] == "Please login") or (data["message"] == "Required to set Profile"):
+                    print("Session expired..")
                     login = await self.login()
                     if login:
                         data = await resp.json(encoding="utf-8")
-                        if data["message"] == "Success":
-                            transactions = data["payload"]["history"]
-                            return transactions
+                        if data:
+                            if data["message"] == "Success":
+                                transactions = data["payload"]["history"]
+                                return transactions
+                        else:
+                            print("No history found.")
+                            return None
                     else:
-                        print("Failed to fulfil request.")
+                        print("Failed to login... Trying again..")
                         return None
                 if data["message"] == "Success":
                     transactions = data["payload"]["history"]
                     return transactions
             else:
-                print("Failed to fulfil request.")
+                print("No history found.")
                 return None
 
     async def close(self):
@@ -89,4 +101,7 @@ class HTTPSession:
                 if transactions and (len(transactions) > 0):
                     history[x[v]] = [
                         {"date": tr["narrative2"], "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], "balance": tr["balance"], "description": tr["description"]} for tr in transactions]
-        return history
+        if history == {}:
+            return None
+        else:
+            return history
