@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **(please complete the following information):**
- - OS: [e.g. Windows, Ubuntu 16.04]
+ - OS: [e.g. Windows, Ubuntu xx.xx]
 
 **Additional context**
 Add any other context about the problem here.
