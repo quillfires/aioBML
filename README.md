@@ -22,7 +22,7 @@ You must have python 3 installed
 
 ```$ git clone https://github.com/quillfires/aioBML.git```
 
-```$ cd aiobml```
+```$ cd aioBML```
 
 ```$ python setup.py install```
 
