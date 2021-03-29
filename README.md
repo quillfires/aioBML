@@ -33,12 +33,13 @@ bank = asyncBML(username="your_user_name",password="your_password")
 
 async def main():
     while True:
-        mybank = await bank.get_history()
-        for accounts in mybank:
-            for transaction in mybank[accounts]:
-                print(transaction)
-                #check if it is in your db
-                # if not, save to db and alert about the transaction
+        history = await bank.get_history()
+        if history:
+            for accounts in history:
+                for transaction in history[accounts]:
+                    print(transaction)
+                    #check if it is in your db
+                    # if not, save to db and alert about the transaction
         await asyncio.sleep(30) #30 seconds later check again
 
 
