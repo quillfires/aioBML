@@ -61,7 +61,7 @@ async def main():
                     print(transaction)
                     #check if it is in your db
                     # if not, save to db and alert about the transaction
-        await asyncio.sleep(30) #30 seconds later check again
+        await asyncio.sleep(1) # keep checking
 
 
 if __name__ == '__main__':
