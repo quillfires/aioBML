@@ -9,7 +9,7 @@ This is an asynchronous Python wrapper around the Bank of Maldives API. This rep
 
 # How it works
 
-Its a simple asynchronous Python API wrapper that returns the transaction history of all your accounts from the Bank of Maldives web API. If you want to check for new transactions, save the transactions to a db, check and add any transactions that's not currently saved to the db.
+Its a simple asynchronous Python wrapper around the BML API that returns the transaction history of all your Bank of Maldives accounts. If you want to check for new transactions, save the transactions to a db, check and add any transactions that's not currently saved to the db.
 
 # setup
 You must have python 3 installed

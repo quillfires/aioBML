@@ -5,7 +5,6 @@ from .errors import HTTPException, Unauthorized
 
 
 class HTTPSession:
-    BASE = 'https://www.bankofmaldives.com.mv/internetbanking/api/'
 
     def __init__(self, loop, **attrs):
         username = attrs.get('username', None)
@@ -53,35 +52,34 @@ class HTTPSession:
             return False
 
     async def request(self, method, url):
-        url = f'{self.BASE}{url}'
-        body = await self._request(method, url)
-        return body
+        data = await self._request(method, url)
+        if data:
+            if (data["message"] == "Please login") or (data["message"] == "Required to set Profile"):
+                print("Session expired..")
+                login = await self.login()
+                if login:
+                    data = await self._request(method, url)
+                    if data:
+                        if data["message"] == "Success":
+                            transactions = data["payload"]["history"]
+                            return transactions
+                    else:
+                        print("No history found.")
+                        return None
+                else:
+                    print("Failed to login... Trying again..")
+                    return None
+            if data["message"] == "Success":
+                transactions = data["payload"]["history"]
+                return transactions
+        else:
+            print("No history found.")
+            return None
 
     async def _request(self, method, url):
-        async with self._session.request(method, url) as resp:
+        async with self._session.request(method, f'{self.base_url}{url}') as resp:
             data = await resp.json(encoding="utf-8")
-            if data:
-                if (data["message"] == "Please login") or (data["message"] == "Required to set Profile"):
-                    print("Session expired..")
-                    login = await self.login()
-                    if login:
-                        data = await resp.json(encoding="utf-8")
-                        if data:
-                            if data["message"] == "Success":
-                                transactions = data["payload"]["history"]
-                                return transactions
-                        else:
-                            print("No history found.")
-                            return None
-                    else:
-                        print("Failed to login... Trying again..")
-                        return None
-                if data["message"] == "Success":
-                    transactions = data["payload"]["history"]
-                    return transactions
-            else:
-                print("No history found.")
-                return None
+            return data
 
     async def close(self):
         await self._session.close()
