@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
 - [x] Get todays history
 - [ ] Get history from a date range
+- [ ] Make Transfer to a given account number
 - [ ] Add contacts
 - [ ] Delete contacts
-- [ ] Make Transfer to a given account number
-- [ ] Make transfers to account saved in contacts.
+- [ ] Make transfers to contacts.
