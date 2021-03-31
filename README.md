@@ -72,3 +72,13 @@ if __name__ == '__main__':
     finally:
         loop.run_until_complete(bank.close())
 ```
+
+
+## Todo
+
+- [x] Get todays history
+- [ ] Get history from a date range
+- [ ] Add contacts
+- [ ] Delete contacts
+- [ ] Make Transfer to a given account number
+- [ ] Make transfers to account saved in contacts.
