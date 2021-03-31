@@ -8,12 +8,33 @@ The following is a set of guidelines for contributing to the repository. These a
 
 Generally speaking questions are better suited in our resources below.
 
-- The official support server: https://discord.gg/fm4HNF6Ted
+- The [discord server](https://discord.gg/fm4HNF6Ted)
 
 Please try your best not to ask questions in our issue tracker. Most of them don't belong there unless they provide value to a larger audience.
 
-## Good Bug Reports
+## We Develop with Github
+We use GitHub to host code, to track issues and feature requests, as well as accept pull requests.
+If you are proposing new features, please discuss them with us in the [discord server](https://discord.gg/fm4HNF6Ted) before you start working on them!
 
+## We Use [Git Flow](https://atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+![Simple Image Of A Git Flow Workflow](https://nvie.com/img/hotfix-branches@2x.png)  
+When contributing to this project, please make sure you follow this and name your branches appropriately! 
+
+## All Code Changes Happen Through Pull Requests
+Make sure you know how Git Flow works before contributing! 
+Pull requests are the best way to propose changes to the codebase. We actively welcome your pull requests:
+
+1. Fork the repo and create your branch from `master` or `development` according to Git Flow.
+2. Update the CHANGELOG.
+3. If you've made a breaking change, mark changelog as "BREAKING".
+4. Make sure your code passes the lint checks.
+5. Create Issues and pull requests!
+
+## Any contributions you make will be under the MIT License
+In short, when you submit code changes, your submissions are understood to be under the same [MIT License](https://github.com/quillfires/aioBML/blob/main/LICENSE) that covers the project. Feel free to contact the maintainers if that's a concern.
+
+## Report bugs using [Github Issues](https://github.com/quillfires/aioBML/issues)
+We use GitHub issues to track public bugs. Report a bug by [opening a new Issue](https://github.com/quillfires/aioBML/issues/new); it's that easy!
 Please be aware of the following things when filing bug reports.
 
 1. Don't open duplicate issues. Please search your issue to see if it has been asked already. Duplicate issues will be closed.
