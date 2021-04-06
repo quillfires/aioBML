@@ -5,7 +5,7 @@
 
 
 
-This is an asynchronous Python wrapper around the Bank of Maldives API. This repo is an async version built using [bml_notifier](https://github.com/Dharisd/bml_notifier) and [bml-transactions](https://github.com/baraveli/bml-transactions) as a reference. 
+This is an asynchronous Python wrapper around the Bank of Maldives API. This library is not yet fully compeleted. As of now it only can be used to get the transactions done within the last 24 - 48 hours. *scroll to the end to see the to do list of this library*
 
 # How it works
 
@@ -61,7 +61,7 @@ async def main():
                     print(transaction)
                     #check if it is in your db
                     # if not, save to db and alert about the transaction
-        await asyncio.sleep(1) # keep checking
+        await asyncio.sleep(30) # keep checking
 
 
 if __name__ == '__main__':

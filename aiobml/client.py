@@ -8,7 +8,25 @@ class asyncBML():
         self.http = HTTPSession(loop=loop, username=username, password=password)
 
     async def close(self):
+        """|coro|
+        Clear the session
+
+        """
         await self.http.close()
+
+    async def get_accounts(self):
+        """|coro|
+
+        Method which retrieves all the accounts.
+
+        Returns
+        ---------
+        list: accounts
+            a list of disctionary objects containing all the accounts.
+            [{account1}, {account2}, {account3}]
+        """
+        data = await self.http.get_all_accounts()
+        return data
 
     async def get_history(self) -> dict:
         """|coro|

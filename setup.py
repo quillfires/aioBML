@@ -11,13 +11,14 @@ except ImportError:  # pip >= 10.0.0
 
 WORK_DIR = pathlib.Path(__file__).parent
 
+README = (WORK_DIR / "README.md").read_text()
+
 # Check python version
 MINIMAL_PY_VERSION = (3, 7)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aiobml works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-VERSION = '0.1.1'
-LONG_DESCRIPTION = "Its a simple asynchronous Python wrapper around the BML API that returns the transaction history of all your Bank of Maldives accounts. If you want to check for new transactions; store the transactions in a db, check and add any transactions that's not currently saved to the db."
+VERSION = '0.1.2'
 
 setup(
     name='aiobml',
@@ -33,7 +34,8 @@ setup(
     )),
     maintainer_email='fayaz.quill@gmail.com',
     description='Asynchronous Python wrapper around BML API',
-    long_description=LONG_DESCRIPTION,
+    long_description=README,
+    long_description_content_type="text/markdown",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
