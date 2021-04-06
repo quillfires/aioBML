@@ -37,21 +37,21 @@ class HTTPSession:
         async with self._session.get(f"{self.base_url}profile") as profile:
             if profile.status == 200:
                 if self.acc_populate:
-                    async with self._session.get(f"{self.base_url}dashboard") as dash:
-                        if dash.status == 200:
-                            data = await dash.json(encoding="utf-8")
-                            self.accounts = [{x['id']: x['account']} for x in data['payload']['dashboard']]
-                            self.acc_populate = False
-                            return True
-                        else:
-                            print("Can't retrieve the accounts")
-                            return False
+                    dash = await self._session.get(f"{self.base_url}dashboard")
+                    if dash.status == 200:
+                        data = await dash.json(encoding="utf-8")
+                        self.accounts = [{k:v for (k,v) in x.items()} for x in data['payload']['dashboard']]
+                        self.acc_populate = False
+                        return True
+                    else:
+                        print("Can't retrieve the accounts")
+                        return False
                 else:
                     return True
             print("Can't login...")
             return False
 
-    async def request(self, method, url):
+    async def hrequest(self, method, url):
         data = await self._request(method, url)
         if data:
             if (data["message"] == "Please login") or (data["message"] == "Required to set Profile"):
@@ -84,16 +84,27 @@ class HTTPSession:
     async def close(self):
         await self._session.close()
 
+    async def get_all_accounts(self):
+        if self.acc_populate:
+            await self.login()
+        accounts = [{k:v for (k,v) in x.items() if k not in ['customer', 'account_type', 'product_code', 
+        'product_group', 'primary_supplementary', 'secondary_customer', 'statecode', 'statuscode', 'actions', 
+        'id', 'contact_type', 'success']} for x in self.accounts]
+        if accounts:
+            return accounts
+        else:
+            return None
+
     async def get_history(self):
         history = {}
         if self.acc_populate:
             await self.login()
         for x in self.accounts:
-            for v in x:
-                transactions = await self.request('GET', f'account/{v}/history/today')
-                if transactions and (len(transactions) > 0):
-                    history[x[v]] = [
-                        {"date": tr["narrative2"], "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], "balance": tr["balance"], "description": tr["description"]} for tr in transactions]
+            transactions = await self.hrequest('GET', f'account/{x["id"]}/history/today')
+            if transactions and (len(transactions) > 0):
+                history[x["account"]] = [
+                    {"date": tr["narrative2"], "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], 
+                    "balance": tr["balance"], "description": tr["description"]} for tr in transactions]
         if history == {}:
             return None
         else:
