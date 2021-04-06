@@ -5,7 +5,9 @@
 
 
 
-This is an asynchronous Python wrapper around the Bank of Maldives API. This library is not yet fully compeleted. As of now it only can be used to get the transactions done within the last 24 - 48 hours. *scroll to the end to see the to do list of this library*
+This is an asynchronous Python wrapper around the Bank of Maldives API. 
+
+This library is not fully completed yet. As of now it can be used to get the transactions done within the last 24 - 48 hours and to get all the information about your Accounts. *scroll to the end to see the to do list of this library*
 
 # How it works
 
@@ -77,6 +79,7 @@ if __name__ == '__main__':
 ## Todo
 
 - [x] Get todays history
+- [x] Get Account details
 - [ ] Get history from a date range
 - [ ] Make Transfer to a given account number
 - [ ] Add contacts
