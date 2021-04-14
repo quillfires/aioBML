@@ -73,6 +73,12 @@ async def accounts():
     print(data)
     # show all the accounts you have in Bank of Maldives
 
+async def add_cont(account, name):
+    added_acc = await bank.add_contact(account, name)
+    print(added_acc)
+    # adds the account your contact list
+    # throws DuplicateContent error if it is already in the contact list
+
 async def delete_cont(account):
     await bank.delete_contact(account)
     # deletes the first match from your contact list
