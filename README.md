@@ -9,9 +9,7 @@ Its a simple asynchronous Python wrapper around the BML API. Currently you can u
 
 [![ViewCount](https://views.whatilearened.today/views/github/quillfires/aioBML.svg)](https://views.whatilearened.today/views/github/quillfires/aioBML.svg)  [![GitHub forks](https://img.shields.io/github/forks/quillfires/aioBML)](https://github.com/quillfires/aioBML/network)  [![GitHub stars](https://img.shields.io/github/stars/quillfires/aioBML.svg?color=ffd40c)](https://github.com/quillfires/aioBML/stargazers)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/quillfires/aioBML/issues)  [![GitHub issues](https://img.shields.io/github/issues/quillfires/aioBML.svg?color=808080)](https://github.com/quillfires/aioBML/issues)  
 
-This library is not fully completed yet. As of now it can be used to get the transactions done within the last 24 - 48 hours, get all the information about your Accounts and your contacts and add & remove contacts.
-
-This library can be used with any other async library like discord.py and async telegram or viber.
+This library is not fully completed yet. As of now it can be used to get the transactions done within the last 24 - 48 hours, get all the information about your Accounts and your contacts and add & remove contacts. *scroll to the end to see the to do list of this library*
 
 # setup
 You must have python 3 installed
@@ -88,3 +86,15 @@ if __name__ == '__main__':
     finally:
         loop.run_until_complete(bank.close())
 ```
+
+
+## Todo
+
+- [x] Get todays history
+- [x] Get Account details
+- [x] Get contacts
+- [x] Add contacts
+- [x] Delete contacts
+- [ ] Get history from a date range
+- [ ] Make Transfer to a given account number
+- [ ] Make transfers to contacts.
