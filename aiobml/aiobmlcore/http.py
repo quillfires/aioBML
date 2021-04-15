@@ -25,7 +25,7 @@ import aiohttp
 import asyncio
 from typing import Union
 
-from .errors import *
+from errors import *
 
 
 class HTTPSession:
