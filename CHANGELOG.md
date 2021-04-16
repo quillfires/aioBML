@@ -5,15 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html);
 
-# v0.1.4
+# v0.1.5
 
 ### Internal
 - `add_account` bug fix.
-- errors module moved so it can be expected easily`aiobml.errors.Exception`.
+- errors module moved so it can be expected easily`aiobml.core.errors.Exception`.
   - These details can be used for error handlers and try / excepts for example:
-  - `except aiobml.errors.HTTPException:`
+  - `except aiobml.core.errors.HTTPException:`
 
-# v0.1.3
+# v0.1.4
 
 ## Added
 
@@ -21,6 +21,11 @@ This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.
   - Will return a list of all your contacts.
 - New feature: `add_contact` coroutine added
   - add a new account to your contact list.
+
+# v0.1.3
+
+## Added
+
 - New feature: `delete_contact` coroutine added
   - delete a contact from your contact list.
 

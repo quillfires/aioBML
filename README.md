@@ -93,7 +93,6 @@ if __name__ == '__main__':
         loop.run_until_complete(bank.close())
 ```
 
-
 ## Todo
 
 - [x] Get todays history
