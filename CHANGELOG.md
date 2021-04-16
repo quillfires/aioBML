@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html);
 
+# v0.1.4
+
+### Internal
+- `add_account` bug fix.
+- errors module moved so it can be expected easily`aiobml.errors.Exception`.
+  - These details can be used for error handlers and try / excepts for example:
+  - `except aiobml.errors.HTTPException:`
+
 # v0.1.3
 
 ## Added

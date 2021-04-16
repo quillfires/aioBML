@@ -18,7 +18,7 @@ MINIMAL_PY_VERSION = (3, 7)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aiobml works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 setup(
     name='aiobml',

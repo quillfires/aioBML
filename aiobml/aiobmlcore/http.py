@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import aiohttp
-import asyncio
-from typing import Union
 
 from .errors import *
 
@@ -153,7 +151,7 @@ class HTTPSession:
         contacts = await self.crequest('GET', 'contacts')
         return contacts
 
-    async def add_contact(self, foo=None, bar=None):
+    async def add_contact(self, foo:str=None, bar:str=None):
         if (not foo) or (not bar):
             raise MissingRequiredFields('Account number and Name is Required.')
         try:
