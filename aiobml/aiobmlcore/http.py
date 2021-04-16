@@ -22,10 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import aiohttp
-import asyncio
-from typing import Union
 
-from errors import *
+from .errors import *
 
 
 class HTTPSession:
@@ -167,7 +165,7 @@ class HTTPSession:
             raise InvalidContent('Please Enter a valid account number.')
         duplicate = next((contact for contact in await self.get_contacts() if contact['account'] == account), None)
         if duplicate:
-            raise DuplicateContent(f'The account {account} is already saved under the alias {duplicate["alias"]}')
+            raise DuplicateContent(f'The account {account} is already saved under the alias {duplicate["name"]}')
         data = {"contact_type": "IAT", "account": account, "alias": alias}
         async with self._session.post(f'{self.base_url}contacts', data=data) as r:
             r = await r.json(encoding="utf-8")
