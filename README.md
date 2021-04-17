@@ -37,31 +37,15 @@ loop = asyncio.get_event_loop()
 bank = asyncBML(username="your_user_name",password="your_password")
 
 async def main():
-    while True:
-        history = await bank.get_history()
-        # will return a dict object for any of your account
-        # that has a transaction in 24 to 48 hours. 
-        # {account1:[{transaction1},{trabsaction2}],}
-        # detailed example of one account with one transaction:
-        # {'ACCOUNT NUMBER': 
-        #     [
-        #         {
-        #             'date': 'date', 
-        #             'sender': 'sender name', 
-        #             'amount': 'amount', 
-        #             'minus': True/False, 
-        #             'balance': 'balance', 
-        #             'description': 'Transfer Credit or Transfer Debit'
-        #         }, 
-        #     ],
-        # }
-        if history:
-            for accounts in history:
-                for transaction in history[accounts]:
-                    print(transaction)
-                    # check if it is in your db
-                    # if not, save to db and alert about the transaction
-        await asyncio.sleep(30) # keep checking
+    await bank.start()
+
+@bank.event('new_transaction')
+async def on_new_transaction(transaction):
+    print(transaction)
+    # on app reboot, event will trigger for all the transactions within 24 hours
+    # Use a db to avoid being notified of the same transaction.
+    # check if transaction is in your db
+    # if not, save to db and alert about the transaction
 
 async def contacts():
     data = await bank.get_contacts()
@@ -92,6 +76,9 @@ if __name__ == '__main__':
     finally:
         loop.run_until_complete(bank.close())
 ```
+
+# Changlog
+[See the change log here](https://github.com/quillfires/aioBML/blob/development/CHANGELOG.md)
 
 ## Todo
 

@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import asyncio
+from asyncio import ensure_future, Future, iscoroutine
+from collections import defaultdict, OrderedDict
+from threading import Lock
 from .core.http import HTTPSession
 
 
@@ -29,6 +32,10 @@ class asyncBML():
     def __init__(self, *, loop=None, username=None, password=None):
         loop = loop or asyncio.get_event_loop()
         self.http = HTTPSession(loop=loop, username=username, password=password)
+        self._events = defaultdict(OrderedDict)
+        self.transactions = []
+        self._loop = loop
+        self._lock = Lock()
 
     async def close(self):
         """|coro|
@@ -50,6 +57,84 @@ class asyncBML():
         """
         data = await self.http.get_all_accounts()
         return data
+
+    def event(self, event, f=None):
+        """Registers the function ``f`` to the event name ``event``.
+        If ``f`` isn't provided, this method returns a function that
+        takes ``f`` as a callback; in other words, you can use this method
+        as a decorator, like so:
+            @aiobml.on('new_transaction')
+            async def data_handler(data):
+                print(data)
+        In both the decorated and undecorated forms, the event handler is
+        returned. The upshot of this is that you can call decorated handlers
+        directly
+
+        Note
+        --------
+        Will fire all the transactions within 24 hrs at the app reboot.
+        Use a db to make sure that you arnt notified of the same transaction.
+        """
+        def _on(f):
+            self._add_event_handler(event, f, f)
+            return f
+        if f is None:
+            return _on
+        else:
+            return _on(f)
+
+    def _add_event_handler(self, event, k, v):
+        self.emit('new_listener', event, k)
+        with self._lock:
+            self._events[event][k] = v
+
+    def _emit_handle_potential_error(self, event, error):
+        if event == 'error':
+            if error:
+                raise error
+            else:
+                raise PyeeException("Uncaught, unspecified 'error' event.")
+
+    def _call_handlers(self, event, args, kwargs):
+        handled = False
+        with self._lock:
+            funcs = list(self._events[event].values())
+        for f in funcs:
+            self._emit_run(f, args, kwargs)
+            handled = True
+        return handled
+
+    def emit(self, event, *args, **kwargs):
+        handled = self._call_handlers(event, args, kwargs)
+        if not handled:
+            self._emit_handle_potential_error(event, args[0] if args else None)
+        return handled
+
+    def _emit_run(self, f, args, kwargs):
+        try:
+            coro = f(*args, **kwargs)
+        except Exception as exc:
+            self.emit('error', exc)
+        else:
+            if iscoroutine(coro):
+                if self._loop:
+                    f = ensure_future(coro, loop=self._loop)
+                else:
+                    f = ensure_future(coro)
+            elif isinstance(coro, Future):
+                f = coro
+            else:
+                f = None
+
+            if f:
+                @f.add_done_callback
+                def _callback(f):
+                    if f.cancelled():
+                        return
+
+                    exc = f.exception()
+                    if exc:
+                        self.emit('error', exc)
 
     async def get_contacts(self):
         """|coro|
@@ -147,3 +232,27 @@ class asyncBML():
         """
         data = await self.http.get_history()
         return data
+
+    async def start(self):
+        """|coro|
+        An asynchronous call which starts the BML event loop.
+        listen for new transactions using a decorator like:
+        @aiobml.on('new_transaction')
+            async def data_handler(data):
+                print(data)
+
+        Note
+        --------
+        Will fire all the transactions within last 24hrs at the app reboot.
+        Use a db to make sure that you arnt notified of the same transaction.
+        """
+        while True:
+            mybank = await self.http.get_history()
+            if mybank:
+                for accounts in mybank:
+                    for transaction in mybank[accounts]:
+                        transaction.pop('balance')
+                        if (transaction not in self.transactions):
+                            self.emit('new_transaction', transaction)
+                            self.transactions.append(transaction)
+            await asyncio.sleep(30)
