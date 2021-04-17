@@ -26,6 +26,7 @@ from asyncio import ensure_future, Future, iscoroutine
 from collections import defaultdict, OrderedDict
 from threading import Lock
 from .core.http import HTTPSession
+from .core.errors import *
 
 
 class asyncBML():
@@ -93,7 +94,7 @@ class asyncBML():
             if error:
                 raise error
             else:
-                raise PyeeException("Uncaught, unspecified 'error' event.")
+                raise ClientError("Uncaught, unspecified 'error' event.")
 
     def _call_handlers(self, event, args, kwargs):
         handled = False
