@@ -64,7 +64,7 @@ class asyncBML():
         If ``f`` isn't provided, this method returns a function that
         takes ``f`` as a callback; in other words, you can use this method
         as a decorator, like so:
-            @aiobml.on('new_transaction')
+            @bank.event('new_transaction')
             async def data_handler(data):
                 print(data)
         In both the decorated and undecorated forms, the event handler is
@@ -238,7 +238,7 @@ class asyncBML():
         """|coro|
         An asynchronous call which starts the BML event loop.
         listen for new transactions using a decorator like:
-        @aiobml.on('new_transaction')
+        @aiobmlclient.event('new_transaction')
             async def data_handler(data):
                 print(data)
 
