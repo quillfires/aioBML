@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import asyncio
-from .aiobmlcore.http import HTTPSession
+from .core.http import HTTPSession
 
 
 class asyncBML():
