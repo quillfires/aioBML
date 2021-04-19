@@ -29,7 +29,7 @@ class BML(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.db = bot.plugin_db.get_partition(self)
-        self.bank = asyncBML(username="ur_user_name", password="ur_pass", loop=bot.loop)
+        self.bank = asyncBML(username="ur_user_name", password="ur_pass")
         bot.loop.create_task(self.start())
         self.bank.event("new_transaction")(self.on_new_transaction)
 
