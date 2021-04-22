@@ -30,8 +30,8 @@ class BML(commands.Cog):
         self.bot = bot
         self.db = bot.plugin_db.get_partition(self)
         self.bank = asyncBML(username="ur_user_name", password="ur_pass")
-        bot.loop.create_task(self.start())
         self.bank.event("new_transaction")(self.on_new_transaction)
+        bot.loop.create_task(self.start())
 
     # Check if the transection is new
     async def check_if_new(self, transaction):
