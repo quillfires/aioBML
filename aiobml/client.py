@@ -248,12 +248,16 @@ class asyncBML():
         Use a db to make sure that you arnt notified of the same transaction.
         """
         while True:
-            mybank = await self.http.get_history()
-            if mybank:
-                for accounts in mybank:
-                    for transaction in mybank[accounts]:
-                        transaction.pop('balance')
-                        if (transaction not in self.transactions):
-                            self.emit('new_transaction', transaction)
-                            self.transactions.append(transaction)
+            try:
+                mybank = await self.http.get_history()
+                if mybank:
+                    for accounts in mybank:
+                        for transaction in mybank[accounts]:
+                            transaction.pop('balance')
+                            if (transaction not in self.transactions):
+                                self.emit('new_transaction', transaction)
+                                self.transactions.append(transaction)
+            except Exception as e:
+                print(e)
+                pass
             await asyncio.sleep(30)
