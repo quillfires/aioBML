@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import aiohttp
+from dateutil import parser
 
 from .errors import *
 
@@ -212,7 +213,7 @@ class HTTPSession:
             transactions = await self.hrequest('GET', f'account/{x["id"]}/history/today')
             if transactions and (len(transactions) > 0):
                 history[x["account"]] = [
-                    {"date": tr["narrative2"], "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], 
+                    {"date": parser.parse(tr["bookingDate"]), "sender": tr["narrative3"], "amount": tr["amount"], "minus": tr["minus"], 
                     "balance": tr["balance"], "description": tr["description"]} for tr in transactions]
         if history == {}:
             return None
