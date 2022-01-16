@@ -104,6 +104,7 @@ class HTTPSession:
         if data:
             if (data["message"] == "Please login") or (data["message"] == "Required to set Profile"):
                 print("Session expired..")
+                #back off
                 login = await self.login()
                 if login:
                     data = await self._request(method, url)
