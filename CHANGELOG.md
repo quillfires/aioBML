@@ -10,7 +10,8 @@ This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.
 ### Internal
 - date is now a datetime object.
 - handles the internal eventloop crashes.
-- `backing off` implement
+- `backing off` implementation 
+- logging implementation 
 - bug fix and blah blah to do
 
 
