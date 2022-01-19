@@ -65,7 +65,7 @@ class HTTPSession:
         self._begin = begin
         self._try = 0
         self._cut_off = 4
-        self._reset_time = begin * 2 ** 11
+        self._reset_time = begin * 2 ** 5
         self._last_active = time.monotonic()
         bucket = random.Random()
         bucket.seed()
