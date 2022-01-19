@@ -64,7 +64,7 @@ class HTTPSession:
     def back_off_init(self, begin=30, *, vary=False):
         self._begin = begin
         self._try = 0
-        self._cut_off = 10
+        self._cut_off = 4
         self._reset_time = begin * 2 ** 11
         self._last_active = time.monotonic()
         bucket = random.Random()
