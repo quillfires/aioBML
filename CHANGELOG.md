@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html);
 
+# v1.0.1
+- No breaking changes
+
+### Internal
+- `transaction['date']` is now a timezone aware datetime object.
+- encrypted password and username
+- handles the internal eventloop crashes.
+- `backing off` implemented: detects if you log in from another device and backs off.
+- logging implemented
+- prevents account locking up by stoping the services when credentials are wrong
+
+
 # v1.0.0
 
 ## Added

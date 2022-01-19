@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2021 Ali Fayaz (Quill) (quillfires)
+Copyright (c) 2021-present Ali Fayaz (Quill) (quillfires)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,48 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+__version__ = "1.0.1"
 import asyncio
 from asyncio import ensure_future, Future, iscoroutine
 from collections import defaultdict, OrderedDict
 from threading import Lock
+import logging
+import sys
+
 from .core.http import HTTPSession
 from .core.errors import *
+logging.basicConfig(level=logging.INFO)
 
+if sys.platform == "win32":
+    try:
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    except AttributeError:
+        logging.error("Windows Proactor Event Loop Policy not found", exc_info=True)
 
 class asyncBML():
     def __init__(self, *, loop=None, username=None, password=None):
         loop = loop or asyncio.get_event_loop()
-        self.http = HTTPSession(loop=loop, username=username, password=password)
+        self.logger = logging.getLogger('aiobml')
+        self.logger.setLevel(logging.INFO)
+        self.http = HTTPSession(loop=loop, username=username, password=password, logger=self.logger)
+        self.username = ''.join(chr(ord(c) + ord(self.http.vathuodi[i % len(self.http.vathuodi)]) - ord('0')) for i, c in enumerate(username))
+        self.password = ''.join(chr(ord(c) + ord(self.http.vathuodi[i % len(self.http.vathuodi)]) - ord('0')) for i, c in enumerate(password))
         self._events = defaultdict(OrderedDict)
         self.transactions = []
         self._loop = loop
         self._lock = Lock()
+        self.logger.info(" █████╗ ██╗ ██████╗ ██████╗ ███╗   ███╗██╗     ")
+        self.logger.info("██╔══██╗██║██╔═══██╗██╔══██╗████╗ ████║██║     ")
+        self.logger.info("███████║██║██║   ██║██████╔╝██╔████╔██║██║     ")
+        self.logger.info("██╔══██║██║██║   ██║██╔══██╗██║╚██╔╝██║██║     ")
+        self.logger.info("██║  ██║██║╚██████╔╝██████╔╝██║ ╚═╝ ██║███████╗")
+        self.logger.info("╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝")
+        self.logger.info('an asynchronous Python wrapper around the Bank of Maldives API')   
+        self.logger.info("Author: Ali Fayaz (Quill) (quillfires)")
+        self.logger.info("Version: v%s", __version__)
+        self.logger.info('copyright (c) 2020-present Ali Fayaz (Quill) (quillfires)')
+        self.logger.info('Starting BML client...')   
+
 
     async def close(self):
         """|coro|
@@ -92,8 +118,10 @@ class asyncBML():
     def _emit_handle_potential_error(self, event, error):
         if event == 'error':
             if error:
+                self.logger.error(error)
                 raise error
             else:
+                self.logger.error('Unknown error')
                 raise ClientError("Uncaught, unspecified 'error' event.")
 
     def _call_handlers(self, event, args, kwargs):
@@ -247,13 +275,23 @@ class asyncBML():
         Will fire all the transactions within last 24hrs at the app reboot.
         Use a db to make sure that you arnt notified of the same transaction.
         """
+        self.logger.info('Listenig for new transactions...')
         while True:
-            mybank = await self.http.get_history()
-            if mybank:
-                for accounts in mybank:
-                    for transaction in mybank[accounts]:
-                        transaction.pop('balance')
-                        if (transaction not in self.transactions):
-                            self.emit('new_transaction', transaction)
-                            self.transactions.append(transaction)
+            try:
+                history = await self.http.get_history()
+                if history:
+                    for accounts in history:
+                        for transaction in history[accounts]:
+                            transaction.pop('balance')
+                            if (transaction not in self.transactions):
+                                self.emit('new_transaction', transaction)
+                                self.transactions.append(transaction)
+                
+            except (Unauthorized, KeyboardInterrupt, SystemExit) as e:
+                self.logger.info('Stopping services...')
+                await self.http.close()
+                if isinstance(e, Unauthorized):
+                    self.logger.error('Confirm your credentials and try again.')
+                self.logger.info('Exiting...')
+                return sys.exit(1)
             await asyncio.sleep(30)
