@@ -287,12 +287,10 @@ class asyncBML():
                 if history:
                     for accounts in history:
                         for transaction in history[accounts]:
-                            ct = dict(transaction)
-                            ct.pop('balance')
-                            ct.pop('date')
-                            if (ct not in self.transactions):
+                            notified = next((t for t in self.transactions if t['id'] == transaction['id']), False)
+                            if not notified:
                                 self.emit('new_transaction', transaction)
-                                self.transactions.append(ct)
+                                self.transactions.append(transaction)
                 
             except (Unauthorized, KeyboardInterrupt, SystemExit) as e:
                 self.logger.info('Stopping services...')
