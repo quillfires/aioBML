@@ -64,8 +64,8 @@ class HTTPSession:
     def back_off_init(self, begin=30, *, vary=False):
         self._begin = begin
         self._try = 0
-        self._cut_off = 10
-        self._reset_time = begin * 2 ** 11
+        self._cut_off = 4
+        self._reset_time = begin * 2 ** 5
         self._last_active = time.monotonic()
         bucket = random.Random()
         bucket.seed()
@@ -260,9 +260,9 @@ class HTTPSession:
                 def clean_up(transactions):
                     for transaction in transactions:
                         transaction['sender'] =  transaction["narrative3"]
-                        transaction['receiver'] = transaction["account"]
+                        transaction['receiver'] = x["account"]
                         if transaction['sender'] == '':
-                            transaction['sender'] = transaction['account']
+                            transaction['sender'] = x['account']
                             transaction['receiver'] = transaction['bookingDate']
                         transaction['date'] = datetime.datetime.now(datetime.timezone.utc)
                     return transactions

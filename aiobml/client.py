@@ -94,7 +94,12 @@ class asyncBML():
             async def data_handler(data):
                 print(data)
         In both the decorated and undecorated forms, the event handler is
-        returned. The upshot of this is that you can call decorated handlers
+        returned. 
+            await bank.start()
+            bank.event("new_transaction")(self.data_handler)
+            async def data_handler(self, transaction):
+                print(transaction)
+        The upshot of this is that you can call decorated handlers
         directly
 
         Note
