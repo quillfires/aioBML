@@ -261,7 +261,7 @@ class HTTPSession:
                     for transaction in transactions:
                         transaction['sender'] =  transaction["narrative3"]
                         transaction['receiver'] = x["account"]
-                        if transaction['sender'] == '':
+                        if transaction['minus']:
                             transaction['sender'] = x['account']
                             transaction['receiver'] = transaction['bookingDate']
                         transaction['date'] = datetime.datetime.now(datetime.timezone.utc)
