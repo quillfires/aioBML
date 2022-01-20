@@ -263,7 +263,7 @@ class HTTPSession:
                         transaction['receiver'] = x["account"]
                         if transaction['minus']:
                             transaction['sender'] = x['account']
-                            transaction['receiver'] = transaction['bookingDate']
+                            transaction['receiver'] = transaction['narrative3']
                         transaction['date'] = datetime.datetime.now(datetime.timezone.utc)
                     return transactions
                 history[x["account"]] =[{k:v for (k,v) in tr.items()} for tr in clean_up(transactions)]
