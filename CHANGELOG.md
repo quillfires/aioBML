@@ -9,7 +9,8 @@ This project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.
 - No breaking changes
 
 ### Internal
-- Adjusted `delay``cut_off`
+- Adjusted `delay cut_off`
+- Bug fix on `cleanup`
 
 # v1.0.1
 - No breaking changes
