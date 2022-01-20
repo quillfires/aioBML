@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 import asyncio
 from asyncio import ensure_future, Future, iscoroutine
 from collections import defaultdict, OrderedDict
