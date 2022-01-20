@@ -260,9 +260,9 @@ class HTTPSession:
                 def clean_up(transactions):
                     for transaction in transactions:
                         transaction['sender'] =  transaction["narrative3"]
-                        transaction['receiver'] = transaction["account"]
+                        transaction['receiver'] = x["account"]
                         if transaction['sender'] == '':
-                            transaction['sender'] = transaction['account']
+                            transaction['sender'] = x['account']
                             transaction['receiver'] = transaction['bookingDate']
                         transaction['date'] = datetime.datetime.now(datetime.timezone.utc)
                     return transactions
