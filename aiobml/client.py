@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 import asyncio
 from asyncio import ensure_future, Future, iscoroutine
 from collections import defaultdict, OrderedDict
@@ -287,8 +287,8 @@ class asyncBML():
                 if history:
                     for accounts in history:
                         for transaction in history[accounts]:
-                            transaction.pop('balance')
-                            if (transaction not in self.transactions):
+                            notified = next((t for t in self.transactions if t['id'] == transaction['id']), False)
+                            if not notified:
                                 self.emit('new_transaction', transaction)
                                 self.transactions.append(transaction)
                 
