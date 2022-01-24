@@ -124,10 +124,8 @@ class asyncBML():
         if event == 'error':
             if error:
                 self.logger.error(error)
-                raise error
             else:
                 self.logger.error('Unknown error')
-                raise ClientError("Uncaught, unspecified 'error' event.")
 
     def _call_handlers(self, event, args, kwargs):
         handled = False
