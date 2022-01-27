@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 import asyncio
 from asyncio import ensure_future, Future, iscoroutine
 from collections import defaultdict, OrderedDict
@@ -123,11 +123,9 @@ class asyncBML():
     def _emit_handle_potential_error(self, event, error):
         if event == 'error':
             if error:
-                self.logger.error(error)
-                raise error
+                self.logger.error(str(error))
             else:
                 self.logger.error('Unknown error')
-                raise ClientError("Uncaught, unspecified 'error' event.")
 
     def _call_handlers(self, event, args, kwargs):
         handled = False
