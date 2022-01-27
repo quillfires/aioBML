@@ -123,7 +123,7 @@ class asyncBML():
     def _emit_handle_potential_error(self, event, error):
         if event == 'error':
             if error:
-                self.logger.error(error)
+                self.logger.error(str(error))
             else:
                 self.logger.error('Unknown error')
 
