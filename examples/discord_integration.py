@@ -1,6 +1,6 @@
 """
 MIT License
-Copyright (c) 2021 Ali Fayaz (Quill) (quillfires)
+Copyright (c) 2021-present Ali Fayaz (Quill) (quillfires)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -31,27 +31,21 @@ class BML(commands.Cog):
         self.db = bot.plugin_db.get_partition(self)
         self.bank = asyncBML(username="ur_user_name", password="ur_pass")
         self.bank.event("new_transaction")(self.on_new_transaction)
-        bot.loop.create_task(self.start())
+        bot.loop.create_task(self.start_aiobml())
 
-    # Check if the transection is new
-    async def check_if_new(self, transaction):
-        db_data = self.db.find(transaction) # check the db
-        if len([r for r in await db_data.to_list(length=None)]) > 0:
-            return False
-        return True
-
-    async def start(self):
+    async def start_aiobml(self):
         await self.bot.wait_until_ready()
-        self.me = self.bot.get_user(475785856137953280)
+        self.me = self.bot.get_user(ur_user_id)
         await self.bank.start()
 
     async def on_new_transaction(self, transaction):
-        is_new = await self.check_if_new(transaction)
-        if is_new:
+        # Check if the transection is new
+        # def is_new(t):
+        # ...
+        # if is_new(transaction):
             # insert into db
-            await self.db.insert_one(transaction)
-            # send me the transaction
-            await self.me.send(f"**New transaction**\n{transaction['description']} of MVR {transaction['amount']} {'to' if transaction['minus'] else 'from'} {transaction['date'] if transaction['sender']=='' else transaction['sender']}")
+            # send me the transaction details
+            # await self.me.send(transaction)
 
     @commands.command()
     @commands.check(commands.is_owner())
